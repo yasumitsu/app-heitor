@@ -11,16 +11,35 @@ const netstat = require('node-netstat');
 //     console.log(data)
 // })
 
-netstat({
-    filter: {
-        local:{port: 3000},
-        state: 'LISTENING'
-    },
-    limit: 5
-}, function (data) {
-    console.log(data)
-    // a single line of data read from netstat
+// netstat({
+//     filter: {
+//         local:{port: 3000},
+//         state: 'LISTENING'
+//     },
+//     limit: 5
+// }, function (data) {
+//     console.log(data)
+//     // a single line of data read from netstat
+// });
+
+var mysql = require('mysql')
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'softpharma',
+  password : 'NwSoftPs1843',
+  database : 'softpharma'
 });
+
+connection.connect()
+
+connection.query('SELECT * from cadcli', function (err, rows, fields) {
+  if (err) throw err
+  
+  console.log('The solution is: ', rows[0])
+})
+
+connection.end()
+
 
 
 const app = express();
